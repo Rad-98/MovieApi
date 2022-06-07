@@ -5,14 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.movieapi.R
 import com.example.movieapi.adapters.ImageSlideAdapter
-import com.example.movieapi.databinding.FragmentHomeBinding
 import com.example.movieapi.databinding.FragmentMovieDetailBinding
-import com.example.movieapi.viewmodels.MovieViewModel
+import com.example.movieapi.viewmodels.movies.MovieViewModel
 import me.relex.circleindicator.CircleIndicator
 
 
@@ -20,6 +20,7 @@ class MovieDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var movieViewModel: MovieViewModel
+    private lateinit var navController: NavController
 
     lateinit var viewPagerAdapter: ImageSlideAdapter
     lateinit var indicator: CircleIndicator
@@ -35,12 +36,12 @@ class MovieDetailFragment : Fragment() {
     ): View? {
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         movieViewModel = ViewModelProvider(this)[MovieViewModel::class.java]
-        val bundle = this.arguments
-        var movieId = bundle?.get("id")
-        val id = movieId.toString().toLong()
+
+        var id = requireArguments().getInt("id")
+
 
         movieViewModel.getMovieById(id)
-        movieViewModel.addMovieDetailResult.observe(viewLifecycleOwner){
+        movieViewModel.addMovieDetailResult.observe(viewLifecycleOwner) {
             binding.txtTitle.text = it.title
             Glide
                 .with(this)
@@ -58,17 +59,17 @@ class MovieDetailFragment : Fragment() {
             binding.txtImdbRating.text = it.imdbRating
             binding.txtImdbVotes.text = it.imdbVotes
             val genresSize = it.genres.size
-            if ( genresSize == 1 ) {
+            if (genresSize == 1) {
                 binding.txtGenres1.text = it.genres[0]
                 binding.txtGenres2.visibility = View.GONE
                 binding.txtGenres3.visibility = View.GONE
             }
-            if ( genresSize == 2 ) {
+            if (genresSize == 2) {
                 binding.txtGenres1.text = it.genres[0]
                 binding.txtGenres2.text = it.genres[1]
                 binding.txtGenres3.visibility = View.GONE
             }
-            if ( genresSize == 3 ) {
+            if (genresSize == 3) {
                 binding.txtGenres1.text = it.genres[0]
                 binding.txtGenres2.text = it.genres[1]
                 binding.txtGenres3.text = it.genres[2]
@@ -78,17 +79,17 @@ class MovieDetailFragment : Fragment() {
             binding.txtDirector.text = it.director
             binding.txtWriter.text = it.writer
             binding.txtActors.text = it.actors
-            if ( genresSize == 1 ) {
+            if (genresSize == 1) {
                 binding.txtGenres11.text = it.genres[0]
                 binding.txtGenres22.visibility = View.GONE
                 binding.txtGenres33.visibility = View.GONE
             }
-            if ( genresSize == 2 ) {
+            if (genresSize == 2) {
                 binding.txtGenres11.text = it.genres[0]
                 binding.txtGenres22.text = it.genres[1]
                 binding.txtGenres33.visibility = View.GONE
             }
-            if ( genresSize == 3 ) {
+            if (genresSize == 3) {
                 binding.txtGenres11.text = it.genres[0]
                 binding.txtGenres22.text = it.genres[1]
                 binding.txtGenres33.text = it.genres[2]
@@ -103,17 +104,28 @@ class MovieDetailFragment : Fragment() {
 
 
 
-
-
-            it.images.let {response->
-                viewPagerAdapter = ImageSlideAdapter(requireContext(), response)
-                binding.viewpager.adapter = viewPagerAdapter
-                indicator = requireView().findViewById(R.id.indicator) as CircleIndicator
-                indicator.setViewPager(binding.viewpager)
+            if (it.images != null) {
+                it.images.let { response ->
+                    viewPagerAdapter = ImageSlideAdapter(requireContext(), response)
+                    binding.viewpager.adapter = viewPagerAdapter
+                    indicator = requireView().findViewById(R.id.indicator) as CircleIndicator
+                    indicator.setViewPager(binding.viewpager)
+                }
+            } else {
+                binding.viewpager.visibility = View.GONE
+                binding.indicator.visibility = View.GONE
+                binding.txtNoImage.visibility = View.VISIBLE
             }
+
+
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
     }
 
 

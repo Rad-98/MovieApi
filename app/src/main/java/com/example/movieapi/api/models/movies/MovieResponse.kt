@@ -1,4 +1,4 @@
-package com.example.movieapi.database.models
+package com.example.movieapi.api.models.movies
 
 data class MovieResponse(
 

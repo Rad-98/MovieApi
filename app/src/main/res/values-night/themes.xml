@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MovieApi" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#27FF5722</item>
+        <item name="colorPrimary">#FF5722</item>
         <item name="colorPrimaryVariant">@color/dark_back</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->

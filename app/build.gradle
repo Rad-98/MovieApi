@@ -72,6 +72,14 @@ dependencies {
     //CircleIndicator
     implementation 'me.relex:circleindicator:2.1.6'
 
+    //Room
+    implementation "androidx.room:room-runtime:2.2.4"
+    kapt "androidx.room:room-compiler:2.2.4"
+    implementation "androidx.room:room-ktx:2.2.5"
+
+
+
+
 
 
 

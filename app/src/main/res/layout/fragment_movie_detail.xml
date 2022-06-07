@@ -290,18 +290,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtplot" />
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="800dp"
-                android:text="TextView"
-
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView5" />
-
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="0dp"
@@ -600,6 +588,18 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout3"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+            <TextView
+                android:id="@+id/txtNoImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sorry ... the photo gallery is empty!"
+                android:textColor="@color/blue_text"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/indicator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager"
